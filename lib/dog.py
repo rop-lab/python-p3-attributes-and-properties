@@ -1,18 +1,7 @@
-#!/usr/bin/env python3
-
-APPROVED_BREEDS = [
-    "Mastiff",
-    "Chihuahua",
-    "Corgi",
-    "Shar Pei",
-    "Beagle",
-    "French Bulldog",
-    "Pug",
-    "Pointer"
-]
-
 class Dog:
-    def __init__(self, name: str, breed: str):
+    approved_breeds = ["Mastiff", "Chihuahua", "Corgi", "Shar Pei", "Beagle", "French Bulldog", "Pug", "Pointer"]
+
+    def __init__(self, name: str = "", breed: str = ""):
         self.name = name
         self.breed = breed
 
@@ -22,8 +11,8 @@ class Dog:
     
     @name.setter
     def name(self, value):
-        if not isinstance(value, str) or len(value) >= 25:
-            raise ValueError("Name must be a string and less than 25 characters.")
+        if not isinstance(value, str) or not (1 <= len(value) <= 25):
+            print("Name must be a string between 1 and 25 characters.")
         else:
             self._name = value
 
@@ -33,23 +22,14 @@ class Dog:
     
     @breed.setter
     def breed(self, value):
-        if value in APPROVED_BREEDS:
+        if value in self.approved_breeds:
             self._breed = value
         else:
-            raise ValueError(f"{value} is not an approved dog breed.")
+            print("Breed must be in the list of approved breeds.")
 
-d1 = Dog("Rusty", "Mastiff")
-print(d1.name)  # Rusty
-d1.name = "Max"
-print(d1.name)  # Max
+# Example usage:
+dog1 = Dog("Buddy", "Beagle")
+print(dog1.name)   # Buddy
+print(dog1.breed)  # Beagle
 
-try:
-    d1.name = 987654321
-except ValueError as e:
-    print(e)  # Name must be a string and less than 25 characters.
-
-try:
-    d1.breed = "Labrador"
-except ValueError as e:
-    print(e)  # Labrador is not an approved dog breed.
-    pass
+dog2 = Dog("Max", "Labrador")  # Breed must be in the list of approved breeds.
